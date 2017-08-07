@@ -13,3 +13,6 @@ class store:
 
     def list_docs(self):
         return self.documents
+
+    def get_document(self,doc):
+        return self.documents[doc]

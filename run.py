@@ -3,6 +3,7 @@
 import json
 from documentrepo import store
 from flask import Flask
+from flask import abort
 
 main = Flask(__name__)
 
@@ -28,7 +29,10 @@ def list_documents():
 #
 @main.route('/docs/<document>')
 def get_document(document):
-    return document
+    try:
+        return json.dumps(get_repo().get_document(document))
+    except KeyError as e:
+        abort(404)
 
 
 
