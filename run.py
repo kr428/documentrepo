@@ -1,3 +1,36 @@
 #!flask/bin/python
-from documentrepo import main
+"""RESTful simple document repository"""
+import json
+from documentrepo import store
+from flask import Flask
+
+main = Flask(__name__)
+
+def get_repo():
+    localstore=store.store()
+    return localstore
+
+# default route
+# add something meaningful here.
+# 
+@main.route('/')
+@main.route('/index')
+def index():
+    return "Hello, World!"
+
+# list all document items in collection
+# 
+@main.route('/docs')
+def list_documents():
+    return json.dumps(get_repo().list_docs())
+
+# fetch a particular document item
+#
+@main.route('/docs/<document>')
+def get_document(document):
+    return document
+
+
+
+
 main.run(debug=True)
